@@ -43,11 +43,15 @@ public class UtilityCellTest extends TestCase {
 
 	public void testPurchaseUtility() {
 		assertEquals(0, gameMaster.getPlayer(0).numberOfUtil());
-		int cellIndex = gameMaster.getGameBoard().queryCellIndex("Utility 1");
-		gameMaster.movePlayer(0, cellIndex);
+		gameMaster();
 		gameMaster.getPlayer(0).purchase();
 		assertEquals(1350, gameMaster.getPlayer(0).getMoney());
 		assertEquals(1, gameMaster.getPlayer(0).numberOfUtil());
+	}
+
+	private void gameMaster() {
+		int cellIndex = gameMaster.getGameBoard().queryCellIndex("Utility 1");
+		gameMaster.movePlayer(0, cellIndex);
 	}
 
 	public void testRent() {

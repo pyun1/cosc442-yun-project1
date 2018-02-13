@@ -8,9 +8,13 @@ public class PropertyCellTest extends TestCase {
 	GameMaster gameMaster;
 	
 	protected void setUp() {
+		gameMaster();
+		gameMaster.setNumberOfPlayers(2);
+	}
+
+	private void gameMaster() {
 		gameMaster = GameMaster.instance();
 		gameMaster.setGameBoard(new SimpleGameBoard());
-		gameMaster.setNumberOfPlayers(2);
 		gameMaster.reset();
 		gameMaster.setGUI(new MockGUI());
 	}

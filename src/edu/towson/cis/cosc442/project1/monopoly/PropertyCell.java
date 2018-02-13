@@ -42,14 +42,21 @@ public class PropertyCell extends Cell {
 	}
 
 	public Boolean playAction(String msg) {
-		Player currentPlayer = null;
+		Player currentPlayer = currentPlayer();
 		if(!isAvailable()) {
-			currentPlayer = GameMaster.instance().getCurrentPlayer();
 			if(theOwner != currentPlayer) {
 				currentPlayer.payRentTo(theOwner, getRent());
 			}
 		}
 		return Boolean.valueOf(msg);
+	}
+
+	private Player currentPlayer() {
+		Player currentPlayer = null;
+		if (!isAvailable()) {
+			currentPlayer = GameMaster.instance().getCurrentPlayer();
+		}
+		return currentPlayer;
 	}
 
 	public void setColorGroup(String colorGroup) {
@@ -70,5 +77,15 @@ public class PropertyCell extends Cell {
 
 	public void setRent(int rent) {
 		this.rent = rent;
+	}
+
+	public void playerMoved(Player player, int playerIndex, GameMaster gameMaster) {
+		if (this.isAvailable()) {
+			int price = this.getPrice();
+			if (price <= player.getMoney() && price > 0) {
+				gameMaster.getGUI().enablePurchaseBtn(playerIndex);
+			}
+		}
+		gameMaster.getGUI().enableEndTurnBtn(playerIndex);
 	}
 }

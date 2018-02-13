@@ -23,9 +23,8 @@ public class UtilityCell extends Cell {
 	}
 
 	public Boolean playAction(String msg) {
-		Player currentPlayer = null;
+		Player currentPlayer = currentPlayer();
 		if(!isAvailable()) {
-			currentPlayer = GameMaster.instance().getCurrentPlayer();
 			if(theOwner != currentPlayer) {
 				GameMaster.instance().utilRollDice();
 				int diceRoll = GameMaster.instance().getUtilDiceRoll();
@@ -33,5 +32,23 @@ public class UtilityCell extends Cell {
 			}
 		}
 		return Boolean.valueOf(msg);
+	}
+
+	private Player currentPlayer() {
+		Player currentPlayer = null;
+		if (!isAvailable()) {
+			currentPlayer = GameMaster.instance().getCurrentPlayer();
+		}
+		return currentPlayer;
+	}
+
+	public void playerMoved(Player player, int playerIndex, GameMaster gameMaster) {
+		if (this.isAvailable()) {
+			int price = this.getPrice();
+			if (price <= player.getMoney() && price > 0) {
+				gameMaster.getGUI().enablePurchaseBtn(playerIndex);
+			}
+		}
+		gameMaster.getGUI().enableEndTurnBtn(playerIndex);
 	}
 }

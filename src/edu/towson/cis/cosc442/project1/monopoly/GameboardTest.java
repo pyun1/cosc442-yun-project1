@@ -10,6 +10,10 @@ public class GameboardTest extends TestCase {
 	
 	protected void setUp() throws Exception {
 		gameBoard = new GameBoard();
+		cell();
+	}
+
+	private void cell() {
 		cell = new PropertyCell();
 		cell.setName("TempCell");
 	}
@@ -30,14 +34,11 @@ public class GameboardTest extends TestCase {
 	}
 	
 	public void testPropertyNumberForColor() {
-		PropertyCell cell1 = new PropertyCell();
-		cell1.setName("Blue 1");
+		PropertyCell cell1 = cell1();
 		cell1.setColorGroup("blue");
-		PropertyCell cell2 = new PropertyCell();
-		cell2.setName("Blue 2");
+		PropertyCell cell2 = cell2();
 		cell2.setColorGroup("blue");
-		PropertyCell cell3 = new PropertyCell();
-		cell3.setName("Green 1");
+		PropertyCell cell3 = cell3();
 		cell3.setColorGroup("green");
 		
 		gameBoard.addCell(cell1);
@@ -45,6 +46,27 @@ public class GameboardTest extends TestCase {
 		gameBoard.addCell(cell3);
 		assertEquals(2, gameBoard.getPropertyNumberForColor("blue"));
 		assertEquals(1, gameBoard.getPropertyNumberForColor("green"));
+	}
+
+	private PropertyCell cell1() {
+		PropertyCell cell1 = new PropertyCell();
+		cell1.setName("Blue 1");
+		cell1.setColorGroup("blue");
+		return cell1;
+	}
+
+	private PropertyCell cell2() {
+		PropertyCell cell2 = new PropertyCell();
+		cell2.setName("Blue 2");
+		cell2.setColorGroup("blue");
+		return cell2;
+	}
+
+	private PropertyCell cell3() {
+		PropertyCell cell3 = new PropertyCell();
+		cell3.setName("Green 1");
+		cell3.setColorGroup("green");
+		return cell3;
 	}
 	
 	public void testQueryCell() {

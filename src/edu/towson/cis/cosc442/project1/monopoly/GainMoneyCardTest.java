@@ -7,14 +7,18 @@ public class GainMoneyCardTest extends TestCase {
     GameMaster gameMaster;
 
     protected void setUp() {
-		gameMaster = GameMaster.instance();
-		gameMaster.setGameBoard(new GameBoardCCGainMoney());
+		gameMaster();
 		gameMaster.setNumberOfPlayers(1);
-		gameMaster.reset();
-		gameMaster.setGUI(new MockGUI());
 		gainMoneyCard = new MoneyCard("Get 50 dollars", 50, Card.TYPE_CC);
 		gameMaster.getGameBoard().addCard(gainMoneyCard);
     }
+
+	private void gameMaster() {
+		gameMaster = GameMaster.instance();
+		gameMaster.setGameBoard(new GameBoardCCGainMoney());
+		gameMaster.reset();
+		gameMaster.setGUI(new MockGUI());
+	}
     
     public void testGainMoneyCardAction() {
         int origMoney = gameMaster.getCurrentPlayer().getMoney();

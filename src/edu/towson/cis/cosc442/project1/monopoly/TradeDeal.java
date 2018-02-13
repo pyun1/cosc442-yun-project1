@@ -39,4 +39,11 @@ public class TradeDeal {
     public void setSellerIndex(int playerIndex) {
         this.playerIndex = playerIndex;
     }
+
+	public Player seller(GameBoard gameBoard, GameMaster gameMaster) {
+		Player seller = gameMaster.getPlayer(getPlayerIndex());
+		Cell property = gameBoard.queryCell(getPropertyName());
+		seller.sellProperty(property, getAmount());
+		return seller;
+	}
 }

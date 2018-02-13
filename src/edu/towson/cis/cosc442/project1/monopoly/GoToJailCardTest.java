@@ -7,13 +7,17 @@ public class GoToJailCardTest extends TestCase {
     Card jailCard = new JailCard(Card.TYPE_CC);
     
     protected void setUp() {
-		gameMaster = GameMaster.instance();
-		gameMaster.setGameBoard(new GameBoardCCJail());
+		gameMaster();
 		gameMaster.setNumberOfPlayers(1);
-		gameMaster.reset();
-		gameMaster.setGUI(new MockGUI());
 		gameMaster.getGameBoard().addCard(jailCard);
     }
+
+	private void gameMaster() {
+		gameMaster = GameMaster.instance();
+		gameMaster.setGameBoard(new GameBoardCCJail());
+		gameMaster.reset();
+		gameMaster.setGUI(new MockGUI());
+	}
     
     public void testJailCardAction() {
 		Card card = gameMaster.drawCCCard();

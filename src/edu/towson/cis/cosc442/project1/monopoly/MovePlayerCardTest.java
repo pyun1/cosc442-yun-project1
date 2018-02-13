@@ -7,14 +7,18 @@ public class MovePlayerCardTest extends TestCase {
     Card movePlayerCard;
     
     protected void setUp() {
-		gameMaster = GameMaster.instance();
-		gameMaster.setGameBoard(new GameBoardCCMovePlayer());
+		gameMaster();
 		gameMaster.setNumberOfPlayers(1);
-		gameMaster.reset();
-		gameMaster.setGUI(new MockGUI());
 		movePlayerCard = new MovePlayerCard("Blue 1", Card.TYPE_CC);
 		gameMaster.getGameBoard().addCard(movePlayerCard);
     }
+
+	private void gameMaster() {
+		gameMaster = GameMaster.instance();
+		gameMaster.setGameBoard(new GameBoardCCMovePlayer());
+		gameMaster.reset();
+		gameMaster.setGUI(new MockGUI());
+	}
     
     public void testJailCardLabel() {
         assertEquals("Go to Blue 1", movePlayerCard.getLabel());

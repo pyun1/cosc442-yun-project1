@@ -6,17 +6,15 @@ import java.util.Iterator;
 
 public class GameMaster {
 
+	private GameMasterProduct gameMasterProduct = new GameMasterProduct();
 	private static GameMaster gameMaster;
 	static final public int MAX_PLAYER = 8;	
-	private Die[] dice;
 	private GameBoard gameBoard;
 	private MonopolyGUI gui;
 	private int initAmountOfMoney;
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private int turn = 0;
 	private int utilDiceRoll;
-	private boolean testMode;
-
 	public static GameMaster instance() {
 		if(gameMaster == null) {
 			gameMaster = new GameMaster();
@@ -26,7 +24,7 @@ public class GameMaster {
 
 	public GameMaster() {
 		initAmountOfMoney = 1500;
-		dice = new Die[]{new Die(), new Die()};
+		gameMasterProduct.setDice(new Die[] { new Die(), new Die() });
 	}
 
     public void btnBuyHouseClicked() {
@@ -93,10 +91,10 @@ public class GameMaster {
     }
     
     public void btnRollDiceClicked() {
-		int[] rolls = rollDice();
+		int[] rolls = gameMasterProduct.rollDice(this.gui);
 		if((rolls[0]+rolls[1]) > 0) {
+			gui(rolls);
 			Player player = getCurrentPlayer();
-			gui.setRollDiceEnabled(false);
 			StringBuffer msg = new StringBuffer();
 			msg.append(player.getName())
 					.append(", you rolled ")
@@ -104,10 +102,15 @@ public class GameMaster {
 					.append(" and ")
 					.append(rolls[1]);
 			gui.showMessage(msg.toString());
-			movePlayer(player, rolls[0] + rolls[1]);
 			gui.setBuyHouseEnabled(false);
 		}
     }
+
+	private void gui(int[] rolls) {
+		Player player = getCurrentPlayer();
+		gui.setRollDiceEnabled(false);
+		movePlayer(player, rolls[0] + rolls[1]);
+	}
 
     public void btnTradeClicked() {
         TradeDialog dialog = gui.openTradeDialog();
@@ -122,13 +125,12 @@ public class GameMaster {
     }
 
     public void completeTrade(TradeDeal deal) {
-        Player seller = getPlayer(deal.getPlayerIndex());
-        Cell property = gameBoard.queryCell(deal.getPropertyName());
-        seller.sellProperty(property, deal.getAmount());
+        Player seller = deal.seller(gameBoard, this);
+		Cell property = gameBoard.queryCell(deal.getPropertyName());
         getCurrentPlayer().buyProperty(property, deal.getAmount());
     }
 
-    public Card drawCCCard() {
+	public Card drawCCCard() {
         return gameBoard.drawCCCard();
     }
 
@@ -211,17 +213,7 @@ public class GameMaster {
 	public void playerMoved(Player player) {
 		Cell cell = player.getPosition();
 		int playerIndex = getPlayerIndex(player);
-		if(cell instanceof CardCell) {
-		    gui.setDrawCardEnabled(true);
-		} else{
-			if(cell.isAvailable()) {
-				int price = cell.getPrice();
-				if(price <= player.getMoney() && price > 0) {
-					gui.enablePurchaseBtn(playerIndex);
-				}
-			}	
-			gui.enableEndTurnBtn(playerIndex);
-		}
+		cell.playerMoved(player, playerIndex, this);
         gui.setTradeEnabled(turn, false);
 	}
 
@@ -235,28 +227,19 @@ public class GameMaster {
 	}
 	
 	public int[] rollDice() {
-		if(testMode) {
-			return gui.getDiceRoll();
-		}
-		else {
-			return new int[]{
-					dice[0].getRoll(),
-					dice[1].getRoll()
-			};
-		}
+		return gameMasterProduct.rollDice(this.gui);
 	}
 	
 	public void sendToJail(Player player) {
 	    int oldPosition = gameBoard.queryCellIndex(getCurrentPlayer().getPosition().getName());
-		player.setPosition(gameBoard.queryCell("Jail"));
-		player.setInJail(true);
+		player.player(gameBoard);
 		int jailIndex = gameBoard.queryCellIndex("Jail");
 		gui.movePlayer(
 		        getPlayerIndex(player),
 		        oldPosition,
 		        jailIndex);
 	}
-    
+
 	private void setAllButtonEnabled(boolean enabled) {
 		gui.setRollDiceEnabled(enabled);
 		gui.setPurchasePropertyEnabled(enabled);
@@ -319,6 +302,6 @@ public class GameMaster {
 	}
 
 	public void setTestMode(boolean b) {
-		testMode = b;
+		gameMasterProduct.setTestMode(b);
 	}
 }

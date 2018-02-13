@@ -13,9 +13,11 @@ public class CellInfoFormatterTest extends TestCase {
     }
     
     public void testPropertyCellText() {
-        String propertyName = "Blue 1";
+        PropertyCell cell = cell();
+		String propertyName = "Blue 1";
         String propertyColor = "blue";
-        String ownerName = "Owner1";
+        Player p = p();
+		String ownerName = "Owner1";
         int numHouses = 2;
         int propertyValue = 120;
         String propertyLabel = "<html><b><font color='" +
@@ -24,14 +26,30 @@ public class CellInfoFormatterTest extends TestCase {
 				"<br>Owner: " + ownerName +
 				"<br>* " + numHouses +
 				"</html>";
-        PropertyCell cell = new PropertyCell();
         cell.setName(propertyName);
-        cell.setPrice(propertyValue);
-        cell.setColorGroup(propertyColor);
-        Player p = new Player();
-        p.setName(ownerName);
         cell.setTheOwner(p);
-        cell.setNumHouses(numHouses);
         assertEquals(propertyLabel, InfoFormatter.cellInfo(cell));
     }
+
+	private PropertyCell cell() {
+		String propertyName = "Blue 1";
+		String propertyColor = "blue";
+		Player p = p();
+		int numHouses = 2;
+		int propertyValue = 120;
+		PropertyCell cell = new PropertyCell();
+		cell.setName(propertyName);
+		cell.setPrice(propertyValue);
+		cell.setColorGroup(propertyColor);
+		cell.setTheOwner(p);
+		cell.setNumHouses(numHouses);
+		return cell;
+	}
+
+	private Player p() {
+		String ownerName = "Owner1";
+		Player p = new Player();
+		p.setName(ownerName);
+		return p;
+	}
 }

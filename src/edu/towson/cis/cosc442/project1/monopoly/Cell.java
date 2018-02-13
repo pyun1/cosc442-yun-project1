@@ -57,4 +57,6 @@ public abstract class Cell implements IOwnable {
 	public void setAvailable(boolean available) {
 		this.available = available;
 	}
+
+	public abstract void playerMoved(Player player, int playerIndex, GameMaster gameMaster);
 }

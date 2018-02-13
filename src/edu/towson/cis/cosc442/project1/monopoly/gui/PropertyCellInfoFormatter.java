@@ -8,12 +8,8 @@ public class PropertyCellInfoFormatter implements CellInfoFormatter {
     public String format(Cell cell) {
         PropertyCell c = (PropertyCell)cell;
         StringBuffer buf = new StringBuffer();
-        Player owner = cell.getTheOwner();
-        String ownerName = "";
-        if(owner != null) {
-        	ownerName = owner.getName();
-        }
-        buf.append("<html><b><font color='")
+        String ownerName = ownerName(cell);
+		buf.append("<html><b><font color='")
                 .append(c.getColorGroup())
                 .append("'>")
                 .append(cell.getName())
@@ -24,4 +20,13 @@ public class PropertyCellInfoFormatter implements CellInfoFormatter {
                 .append("</html>");
         return buf.toString();
     }
+
+	private String ownerName(Cell cell) {
+		Player owner = cell.getTheOwner();
+		String ownerName = "";
+		if (owner != null) {
+			ownerName = owner.getName();
+		}
+		return ownerName;
+	}
 }

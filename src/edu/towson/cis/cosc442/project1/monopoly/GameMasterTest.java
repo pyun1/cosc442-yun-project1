@@ -94,11 +94,15 @@ public class GameMasterTest extends TestCase {
 	}
 	
 	public void testButtonRollDiceClicked() {
-		gameMaster.reset();
+		gameMaster();
 		gameMaster.getGUI();
-		gameMaster.btnRollDiceClicked();
 		assertEquals(0,gameMaster.getCurrentPlayerIndex());
 		assertEquals(gameMaster.getGameBoard().getCell(5), gameMaster.getPlayer(0).getPosition());
+	}
+
+	private void gameMaster() {
+		gameMaster.reset();
+		gameMaster.btnRollDiceClicked();
 	}
 	
 	public void testButtonTradeClicked() {

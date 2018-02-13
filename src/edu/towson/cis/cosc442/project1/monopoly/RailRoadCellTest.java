@@ -32,11 +32,15 @@ public class RailRoadCellTest extends TestCase {
 	
 	public void testPurchaseRailroad() {
 		assertEquals(0, gameMaster.getPlayer(0).numberOfRR());
-		int cellIndex = gameMaster.getGameBoard().queryCellIndex("Railroad A");
-		gameMaster.movePlayer(0, cellIndex);
+		gameMaster();
 		gameMaster.getPlayer(0).purchase();
 		assertEquals(1300, gameMaster.getPlayer(0).getMoney());
 		assertEquals(1, gameMaster.getPlayer(0).numberOfRR());
+	}
+
+	private void gameMaster() {
+		int cellIndex = gameMaster.getGameBoard().queryCellIndex("Railroad A");
+		gameMaster.movePlayer(0, cellIndex);
 	}
 
 	public void testRent() {

@@ -78,9 +78,13 @@ public class BuyHouseDialog extends JDialog {
 	}
 	
 	private void okClicked() {
-		String monopoly = (String)cboMonopoly.getSelectedItem();
+		player();
+		this.dispose();
+	}
+
+	private void player() {
+		String monopoly = (String) cboMonopoly.getSelectedItem();
 		int number = cboNumber.getSelectedIndex() + 1;
 		player.purchaseHouse(monopoly, number);
-		this.dispose();
 	}
 }

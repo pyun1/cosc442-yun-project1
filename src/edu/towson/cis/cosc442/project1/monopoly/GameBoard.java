@@ -5,22 +5,17 @@ import java.util.Hashtable;
 
 public class GameBoard {
 
+	private GameBoardProduct2 gameBoardProduct2 = new GameBoardProduct2();
 	private ArrayList<Cell> cells = new ArrayList<Cell>();
-    private ArrayList<Card> chanceCards = new ArrayList<Card>();
-	//the key of colorGroups is the name of the color group.
+    //the key of colorGroups is the name of the color group.
 	private Hashtable<String, Integer> colorGroups = new Hashtable<String, Integer>();
-	private ArrayList<Card> communityChestCards = new ArrayList<Card>();
 	public GameBoard() {
 		Cell go = new GoCell();
 		addCell(go);
 	}
 
     public void addCard(Card card) {
-        if(card.getCardType() == Card.TYPE_CC) {
-            communityChestCards.add(card);
-        } else {
-            chanceCards.add(card);
-        }
+        gameBoardProduct2.getGameBoardProduct().addCard(card, this.gameBoardProduct2.getCommunityChestCards());
     }
 	
 	public void addCell(Cell cell) {
@@ -35,17 +30,11 @@ public class GameBoard {
 	}
 
     public Card drawCCCard() {
-        Card card = (Card)communityChestCards.get(0);
-        communityChestCards.remove(0);
-        addCard(card);
-        return card;
+        return gameBoardProduct2.drawCCCard();
     }
 
     public Card drawChanceCard() {
-        Card card = (Card)chanceCards.get(0);
-        chanceCards.remove(0);
-        addCard(card);
-        return card;
+        return gameBoardProduct2.getGameBoardProduct().drawChanceCard(this.gameBoardProduct2.getCommunityChestCards());
     }
 
 	public Cell getCell(int newIndex) {
@@ -102,6 +91,6 @@ public class GameBoard {
 	}
 
     public void removeCards() {
-        communityChestCards.clear();
+        gameBoardProduct2.removeCards();
     }
 }

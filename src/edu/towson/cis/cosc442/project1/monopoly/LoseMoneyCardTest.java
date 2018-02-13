@@ -7,14 +7,18 @@ public class LoseMoneyCardTest extends TestCase {
     Card loseMoneyCard;
 
     protected void setUp() {
-		gameMaster = GameMaster.instance();
-		gameMaster.setGameBoard(new GameBoardCCLoseMoney());
+		gameMaster();
 		gameMaster.setNumberOfPlayers(1);
-		gameMaster.reset();
-		gameMaster.setGUI(new MockGUI());
 		loseMoneyCard = new MoneyCard("Pay 20 dollars", -20, Card.TYPE_CC);
 		gameMaster.getGameBoard().addCard(loseMoneyCard);
     }
+
+	private void gameMaster() {
+		gameMaster = GameMaster.instance();
+		gameMaster.setGameBoard(new GameBoardCCLoseMoney());
+		gameMaster.reset();
+		gameMaster.setGUI(new MockGUI());
+	}
     
     public void testLoseMoneyCardAction() {
         int origMoney = gameMaster.getCurrentPlayer().getMoney();

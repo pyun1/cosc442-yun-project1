@@ -8,15 +8,19 @@ public class CardsTest extends TestCase {
     GameMaster gameMaster;
 
     protected void setUp() {
-        gameMaster = GameMaster.instance();
-        gameMaster.setGameBoard(new GameBoardCCGainMoney());
-        gameMaster.setNumberOfPlayers(1);
-        gameMaster.reset();
-        gameMaster.setGUI(new MockGUI());
+        gameMaster();
+		gameMaster.setNumberOfPlayers(1);
         ccCard = new MoneyCard("Get 50 dollars", 50, Card.TYPE_CC);
         chanceCard = new MoneyCard("Lose 50 dollars", -50, Card.TYPE_CHANCE);
         gameMaster.getGameBoard().addCard(ccCard);
     }
+
+	private void gameMaster() {
+		gameMaster = GameMaster.instance();
+		gameMaster.setGameBoard(new GameBoardCCGainMoney());
+		gameMaster.reset();
+		gameMaster.setGUI(new MockGUI());
+	}
     
     public void testCardType() {
         gameMaster.drawCCCard();
