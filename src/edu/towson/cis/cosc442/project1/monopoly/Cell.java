@@ -1,16 +1,26 @@
 package edu.towson.cis.cosc442.project1.monopoly;
 
-public abstract class Cell {
+public abstract class Cell implements IOwnable {
 	private String name;
 	protected Player theOwner;
+	protected Player thePetOwner;
 	private boolean available = true;
 
 	public String getName() {
 		return name;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.towson.cis.cosc442.project1.monopoly.IOwnable#getTheOwner()
+	 */
+	@Override
 	public Player getTheOwner() {
 		return theOwner;
+	}
+	
+	@Override
+	public Player getPetOwner() {
+		return thePetOwner;
 	}
 	
 	public int getPrice() {
@@ -23,8 +33,17 @@ public abstract class Cell {
 		this.name = name;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.towson.cis.cosc442.project1.monopoly.IOwnable#setTheOwner(edu.towson.cis.cosc442.project1.monopoly.Player)
+	 */
+	@Override
 	public void setTheOwner(Player owner) {
 		this.theOwner = owner;
+	}
+	
+	@Override
+	public void setPetOwner(Player thePetOwner) {
+		this.thePetOwner = thePetOwner;
 	}
     
     public String toString() {
