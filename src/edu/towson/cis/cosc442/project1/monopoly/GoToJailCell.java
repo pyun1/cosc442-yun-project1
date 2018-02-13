@@ -6,9 +6,10 @@ public class GoToJailCell extends Cell {
 		setName("Go to Jail");
 	}
 
-	public void playAction() {
+	public Boolean playAction(String msg) {
 		Player currentPlayer = GameMaster.instance().getCurrentPlayer();
 		GameMaster.instance().getGameBoard().queryCell("Jail");
 		GameMaster.instance().sendToJail(currentPlayer);
+		return Boolean.valueOf(msg);
 	}
 }
