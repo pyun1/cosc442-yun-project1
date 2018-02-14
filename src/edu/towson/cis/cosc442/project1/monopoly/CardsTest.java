@@ -2,11 +2,21 @@ package edu.towson.cis.cosc442.project1.monopoly;
 
 import junit.framework.TestCase;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CardsTest.
+ */
 public class CardsTest extends TestCase {
+    
+    /** The chance card. */
     Card ccCard, chanceCard;
     
+    /** The game master. */
     GameMaster gameMaster;
 
+    /* (non-Javadoc)
+     * @see junit.framework.TestCase#setUp()
+     */
     protected void setUp() {
         gameMaster();
 		gameMaster.setNumberOfPlayers(1);
@@ -15,6 +25,9 @@ public class CardsTest extends TestCase {
         gameMaster.getGameBoard().addCard(ccCard);
     }
 
+	/**
+	 * Game master.
+	 */
 	private void gameMaster() {
 		gameMaster = GameMaster.instance();
 		gameMaster.setGameBoard(new GameBoardCCGainMoney());
@@ -22,6 +35,9 @@ public class CardsTest extends TestCase {
 		gameMaster.setGUI(new MockGUI());
 	}
     
+    /**
+     * Test card type.
+     */
     public void testCardType() {
         gameMaster.drawCCCard();
         assertEquals(Card.TYPE_CC, ccCard.getCardType());

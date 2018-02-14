@@ -2,10 +2,21 @@ package edu.towson.cis.cosc442.project1.monopoly;
 
 import junit.framework.TestCase;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MovePlayerCardTest.
+ */
 public class MovePlayerCardTest extends TestCase {
+    
+    /** The game master. */
     GameMaster gameMaster;
+    
+    /** The move player card. */
     Card movePlayerCard;
     
+    /* (non-Javadoc)
+     * @see junit.framework.TestCase#setUp()
+     */
     protected void setUp() {
 		gameMaster();
 		gameMaster.setNumberOfPlayers(1);
@@ -13,6 +24,9 @@ public class MovePlayerCardTest extends TestCase {
 		gameMaster.getGameBoard().addCard(movePlayerCard);
     }
 
+	/**
+	 * Game master.
+	 */
 	private void gameMaster() {
 		gameMaster = GameMaster.instance();
 		gameMaster.setGameBoard(new GameBoardCCMovePlayer());
@@ -20,10 +34,16 @@ public class MovePlayerCardTest extends TestCase {
 		gameMaster.setGUI(new MockGUI());
 	}
     
+    /**
+     * Test jail card label.
+     */
     public void testJailCardLabel() {
         assertEquals("Go to Blue 1", movePlayerCard.getLabel());
     }
     
+    /**
+     * Test move player card action.
+     */
     public void testMovePlayerCardAction() {
 		Card card = gameMaster.drawCCCard();
 		assertEquals(movePlayerCard, card);
@@ -32,6 +52,9 @@ public class MovePlayerCardTest extends TestCase {
 		assertEquals(gameMaster.getGameBoard().queryCell("Blue 1"), cell);
     }
     
+    /**
+     * Test move player card UI.
+     */
     public void testMovePlayerCardUI() {
         gameMaster.movePlayer(0, 2);
         assertTrue(gameMaster.getGUI().isDrawCardButtonEnabled());
